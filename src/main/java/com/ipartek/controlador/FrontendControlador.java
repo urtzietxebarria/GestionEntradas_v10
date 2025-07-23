@@ -29,57 +29,67 @@ import com.ipartek.servicios.ConciertoServicio;
 import com.ipartek.servicios.EntradaServicio;
 import jakarta.servlet.http.HttpSession;
 
-@Controller
+@Controller // Indica que esta clase es un controlador Spring MVC
 public class FrontendControlador {
 
-	@Value("${ruta.imagenes}")
+	@Value("${ruta.imagenes}") // Inyecta el valor de la propiedad 'ruta.imagenes' desde application.properties
 	String rutaFotos;
 
-	@Autowired
+	@Autowired // Inyecta automáticamente el servicio de gestión de entradas
 	private EntradaServicio entradaServ;
 
-	@Autowired
+	@Autowired // Inyecta automáticamente el servicio de gestión de conciertos
 	private ConciertoServicio conciertoServ;
 
+	/**
+	 * Método POST para procesar la compra de entradas
+	 */
 	@PostMapping("/ComprarEntrada")
 	public String compraEntrada(Model model, 
-			@RequestParam Integer id, 
-			@RequestParam Integer cantidad,
-			RedirectAttributes redirectAttributes, 
-			HttpSession session) {
+			@RequestParam Integer id, // ID del concierto
+			@RequestParam Integer cantidad, // Cantidad de entradas a comprar
+			RedirectAttributes redirectAttributes, // Para pasar datos al redireccionar
+			HttpSession session) { // Para acceder a los datos de sesión del usuario
 		
-		Cliente cliente_sesion= (Cliente) session.getAttribute("s_cliente_login");
+		// Obtener cliente logueado desde la sesión
+		Cliente cliente_sesion = (Cliente) session.getAttribute("s_cliente_login");
 		model.addAttribute("cliente_login", cliente_sesion);
 
+		// Obtener información del concierto
 		Concierto conci = conciertoServ.obtenerConciertoPorId(id);
 
+		// Calcular cuántas entradas quedan disponibles
 		int disponibles = conci.getAforo() - conci.getEntradas_vendidas();
 
+		// Verifica si hay suficientes entradas disponibles
 		if (disponibles > cantidad) {
-
 			List<Entrada> listaEntradas = new ArrayList<>();
-			
+
+			// Revalidar cliente en sesión
 			Cliente cliLogueado = new Cliente();
 			if (session.getAttribute("s_cliente_login") != null) {
 				cliLogueado = (Cliente) session.getAttribute("s_cliente_login");
 			}
 
+			// Crear y guardar la cantidad de entradas pedida
 			for (int i = 0; i < cantidad; i++) {
 				Entrada entr = new Entrada();
-				entr.setId(0);
-				entr.setCodigo("DNI-" + UUID.randomUUID().toString());
-				entr.setConcierto_id(conci);
-				entr.setCliente(cliLogueado);
+				entr.setId(0); // ID se genera en base de datos
+				entr.setCodigo("DNI-" + UUID.randomUUID().toString()); // Código único
+				entr.setConcierto_id(conci); // Asocia el concierto
+				entr.setCliente(cliLogueado); // Asocia el cliente
 
+				// Solo si el usuario tiene un nombre de usuario válido
 				if (!cliLogueado.getUser().equals("")) {
-
+					// Guarda la entrada en la base de datos
 					Entrada entradaPreparada = entradaServ.insertarEntrada(entr);
-
 					listaEntradas.add(entradaPreparada);
 
+					// Actualiza la cantidad de entradas vendidas del concierto
 					conci.setEntradas_vendidas(conci.getEntradas_vendidas() + 1);
 					conciertoServ.modificarConcierto(conci);
 
+					// Generar código QR
 					String contenido = entr.getCodigo();
 					String nombreArchivo = "qr_" + entradaPreparada.getId() + ".png";
 					int ancho = 300;
@@ -94,134 +104,139 @@ public class FrontendControlador {
 
 						Path path = new File(rutaFotos + "qr/" + nombreArchivo).toPath();
 						MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path);
-
 					} catch (WriterException | IOException e) {
-						e.printStackTrace();
+						e.printStackTrace(); // En caso de error al generar QR
 					}
-
 				}
-
 			}
 
+			// Concatenar IDs de las entradas para pasarlas a la vista de impresión
 			StringBuilder ids = new StringBuilder();
 			for (Entrada e : listaEntradas) {
 				ids.append(e.getId()).append(",");
 			}
-			
 			if (ids.length() > 0) {
-				ids.deleteCharAt(ids.length() - 1); //Eliminar la última coma
+				ids.deleteCharAt(ids.length() - 1); // Elimina la última coma
 			}
 
-			//Ir a otra pagina y mostrar las entradas al usuario
+			// Redirecciona a la vista de impresión pasando las entradas creadas
 			redirectAttributes.addFlashAttribute("entradasImprimir", listaEntradas);
 			return "redirect:/ImprimirEntradas?ids=" + ids.toString();
 
 		} else {
-			//Ir otra vea a la pagina de la entrada, para comprar otra cantidad
+			// Si no hay entradas suficientes, vuelve a la página del concierto
 			model.addAttribute("concierto", conci);
-			model.addAttribute("obj_cliente", new Cliente()); //alain
+			model.addAttribute("obj_cliente", new Cliente()); // objeto temporal
 			return "frmCompraEntradas";
-
 		}
-		
 	}
 
+	/**
+	 * Método GET para mostrar el formulario de compra de entradas
+	 */
 	@GetMapping("/FrmComprarEntrada")
 	public String frmCompraEntrada(Model model, 
-			@RequestParam Integer id,
+			@RequestParam Integer id, // ID del concierto
 			HttpSession session) {
-		
+
+		// Cargar información del concierto
 		model.addAttribute("concierto", conciertoServ.obtenerConciertoPorId(id));
-		model.addAttribute("obj_cliente", new Cliente()); //alain
-		
-		Cliente cliente_sesion=new Cliente();
-		if (session.getAttribute("s_cliente_login")!=null) {
-			cliente_sesion= (Cliente) session.getAttribute("s_cliente_login");
+		model.addAttribute("obj_cliente", new Cliente()); // objeto temporal
+
+		// Recuperar cliente desde sesión
+		Cliente cliente_sesion = new Cliente();
+		if (session.getAttribute("s_cliente_login") != null) {
+			cliente_sesion = (Cliente) session.getAttribute("s_cliente_login");
 		}
-		
 		model.addAttribute("cliente_login", cliente_sesion);
-		
-		if (cliente_sesion.getId()>0) {
+
+		// Si el cliente está logueado, muestra el formulario
+		if (cliente_sesion.getId() > 0) {
 			return "frmCompraEntradas";
 		} else {
-			cliente_sesion= (Cliente) session.getAttribute("s_cliente_login");
-			
-			model.addAttribute("cliente_login", cliente_sesion);
+			// Si no está logueado, muestra mensaje de error y retorna al listado de conciertos
 			model.addAttribute("mensaje_error", "Debe registrarse para poder comprar entradas.");
-			model.addAttribute("obj_cliente", new Cliente());//Es temporal, se va a quitar
-			model.addAttribute("listaConciertos", conciertoServ.obtenerProximosConciertos());//Es temporal, se va a quitar
-			
+			model.addAttribute("obj_cliente", new Cliente()); // temporal
+			model.addAttribute("listaConciertos", conciertoServ.obtenerProximosConciertos()); // temporal
 			return "entradas";
 		}
-		
 	}
 
+	/**
+	 * Muestra la página con las entradas recién compradas para imprimir
+	 */
 	@GetMapping("/ImprimirEntradas")
-	public String imprimirEntradas(@RequestParam String ids, 
+	public String imprimirEntradas(@RequestParam String ids, // IDs separados por coma
 			Model model,
 			HttpSession session) {
+
 		String[] idsArray = ids.split(",");
 		List<Entrada> listaEntradas = new ArrayList<>();
 
+		// Recuperar las entradas según los IDs pasados por parámetro
 		for (String elem : idsArray) {
 			try {
 				int id = Integer.parseInt(elem);
 				Entrada entrada = entradaServ.obtenerEntradaPorId(id);
 				listaEntradas.add(entrada);
 			} catch (NumberFormatException e) {
-
-				e.printStackTrace();
+				e.printStackTrace(); // Manejo de error si algún ID no es válido
 			}
 		}
 
+		// Pasar entradas a la vista
 		model.addAttribute("entradasImprimir", listaEntradas);
+		model.addAttribute("obj_cliente", new Cliente()); // temporal
 
-		model.addAttribute("obj_cliente", new Cliente()); // alain
-		
-		Cliente cliente_sesion= (Cliente) session.getAttribute("s_cliente_login");
+		// Agregar cliente desde sesión
+		Cliente cliente_sesion = (Cliente) session.getAttribute("s_cliente_login");
 		model.addAttribute("cliente_login", cliente_sesion);
-		return "imprimir";
 
+		return "imprimir"; // Nombre de la vista que muestra los QR
 	}
-	
-	
+
+	/**
+	 * Muestra el menú de próximos conciertos para clientes
+	 */
 	@GetMapping("/MenuProximosConciertosCli")
 	public String menuProxConciertos(Model model,
 			HttpSession session) {
-		
-		Cliente cliente_sesion=new Cliente();
-		if (session.getAttribute("s_cliente_login")!=null) {
-			cliente_sesion= (Cliente) session.getAttribute("s_cliente_login");
+
+		Cliente cliente_sesion = new Cliente();
+		if (session.getAttribute("s_cliente_login") != null) {
+			cliente_sesion = (Cliente) session.getAttribute("s_cliente_login");
 		}
-		
+
 		model.addAttribute("cliente_login", cliente_sesion);
-		
 		model.addAttribute("obj_cliente", new Cliente());
 		model.addAttribute("listaConciertos", conciertoServ.obtenerProximosConciertos());
-		
-		return "entradas";
-		
+
+		return "entradas"; // Muestra lista de conciertos para el cliente
 	}
-	
+
+	/**
+	 * Muestra el área personal del cliente, con sus entradas compradas
+	 */
 	@GetMapping("/MenuAreaPersonalCli")
 	public String menuAreaPersonalCli(Model model,
 			HttpSession session) {
-		
+
+		// Recuperar cliente logueado
 		Cliente clienteSesion = (Cliente) session.getAttribute("s_cliente_login");
 
-	    if (clienteSesion == null || clienteSesion.getId() <= 0) {
-	        return "redirect:/"; 
-	    }
+		// Si no está logueado, redirige al inicio
+		if (clienteSesion == null || clienteSesion.getId() <= 0) {
+			return "redirect:/";
+		}
 
-	    List<Entrada> entradasCliente = entradaServ.obtenerEntradasPorClienteId(clienteSesion.getId());
+		// Obtener todas las entradas del cliente
+		List<Entrada> entradasCliente = entradaServ.obtenerEntradasPorClienteId(clienteSesion.getId());
 
-	    model.addAttribute("cliente_login", clienteSesion);
-	    model.addAttribute("obj_cliente", new Cliente());
+		model.addAttribute("cliente_login", clienteSesion);
+		model.addAttribute("obj_cliente", new Cliente());
+		model.addAttribute("entradasCliente", entradasCliente);
 
-	    model.addAttribute("entradasCliente", entradasCliente);
-
-	    return "conciertos_confirmados";
-			
+		return "conciertos_confirmados"; // Vista del historial del cliente
 	}
-	
 }
+
