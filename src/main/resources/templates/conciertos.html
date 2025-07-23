@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="styles/styles.css">
+	<link rel="stylesheet" href="styles/tabla.css">
+	<title>Concierticket</title>
+</head>
+
+<body>
+
+	<div th:include="plantillas.html::cabecera"></div>
+
+	<div th:include="plantillas.html::menu"></div>
+
+	<main>
+
+		<section id="seccion-formularios">
+			
+			<form th:action="@{/AgregarConcierto}" method="post" enctype="multipart/form-data"
+				th:object="${obj_concierto}">
+
+
+				<label>Fecha</label>
+				<input type="date" th:field="*{fecha}" required />
+				<br />
+
+				<label>Grupo:</label>
+				<input type="text" th:field="*{grupo}" maxlength="45" required />
+				<br />
+
+				<label>Precio:</label>
+				<input type="number" step="0.01" th:field="*{precio}" min="0" required />
+				<br />
+
+				<label>Aforo:</label>
+				<input type="number" th:field="*{aforo}" min="1" max="5000" required />
+				<br />
+
+				<label>Ubicación:</label>
+				<select th:field="*{ubicacion_id}" requiered>
+					<option th:each="elem : ${listaUbicaciones}" th:value="${elem.id}" th:text="${elem.nombre_sala}">
+					</option>
+				</select>
+				<br />
+
+				<label>Foto:</label>
+				<input type="file" name="foto2" accept="image/*" />
+				<br />
+
+				<input type="submit" value="Guardar" />
+			</form>
+			
+		</section>
+
+		<br>
+
+		<section id="seccion-tablas">
+			<table border="1">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Aforo</th>
+						<th>Fecha</th>
+						<th>Foto</th>
+						<th>Grupo</th>
+						<th>Precio</th>
+						<th>Ubicación</th>
+						<th>Opciones</th>
+					</tr>
+				</thead>
+				<tbody>
+
+					<tr th:each="elem : ${listaConciertos}"
+						th:classappend="${#dates.create(elem.fecha.split('-')[0], elem.fecha.split('-')[1], elem.fecha.split('-')[2]).before(#dates.createNow())} ? 'caducado' : ''">
+						<td th:text="${elem.id}">1</td>
+						<td th:text="${elem.aforo}">1200</td>
+						<td th:text="${elem.fecha}">2025-09-01</td>
+						<td>
+							<img th:src="@{'/imagenes/'+${elem.foto}}" alt="foto concierto" width="80px" />
+						</td>
+						<td th:text="${elem.grupo}">Los Rockeros</td>
+						<td th:text="${elem.precio}">25.00 €</td>
+						<td th:text="${elem.ubicacion_id.nombre_sala}">Madrid Arena</td>
+						<td>
+							<a th:href="@{/FrmConciertoModificar(id=${elem.id})}"
+								th:unless="${#dates.create(elem.fecha.split('-')[0], elem.fecha.split('-')[1], elem.fecha.split('-')[2]).before(#dates.createNow())}">✏️</a>
+							<a th:href="@{/ConciertoBorrar(id=${elem.id})}"
+								th:unless="${#dates.create(elem.fecha.split('-')[0], elem.fecha.split('-')[1], elem.fecha.split('-')[2]).before(#dates.createNow())}">🗑️</a>
+						</td>
+					</tr>
+					
+					
+				</tbody>
+			</table>
+
+		</section>
+
+	</main>
+
+	<div th:include="plantillas.html::pie"></div>
+
+</body>
+
+</html>

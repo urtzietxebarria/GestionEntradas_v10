@@ -1,0 +1,76 @@
+<div th:fragment="cabecera">
+	<header>
+		<div id="header_izq" style="display: flex; align-items: center;">
+			<img src="iconos/concierticket.png" alt="Logo" style="height: 110px; margin-right: 15px;">
+		</div>
+		<div id="header_der">
+		</div>
+	</header>
+</div>
+
+<div th:fragment="cabecera_cli">
+	
+	<header>
+		
+		<div id="header_izq" style="display: flex; align-items: center;">
+			<img src="iconos/concierticket.png" alt="Logo" style="height: 110px; margin-right: 15px;">
+		</div>
+		
+		<div id="header_der" th:if="${cliente_login} == null">
+		    <form th:action="@{/ValidarCliente}" method="get" th:object="${obj_cliente}">
+		        <div class="campo-login">
+		            <input type="text" th:field="*{user}" id="user" placeholder="Nombre de usuario">
+		        </div>
+		        <div class="campo-login">
+		            <input type="text" id="pass_sin_hash" onchange="calcularSha256();" placeholder="Contraseña">
+		            <input type="hidden" th:field="*{pass}">
+		        </div>
+		        <div class="boton-login">
+		            <input type="submit" value="Registrarse">
+		        </div>
+		    </form>
+		</div>
+
+		<div id="header_der" th:if="${cliente_login} != null">
+			<p th:text="'Hola '+${cliente_login.user}"></p>
+			<a th:href="@{/CerrarSesion}">Cerrar sesion</a>
+		</div>
+
+	</header>
+	
+</div>
+
+<div th:fragment="menu">
+	<nav>
+		<ul>
+			<li>
+				<a th:href="@{/MenuGestionConciertos}" class="enlace_menu">Conciertos</a>
+			</li>
+			<li>
+				<a th:href="@{/MenuGestionEntradas}" class="enlace_menu">Entradas</a>
+			</li>
+		</ul>
+	</nav>
+</div>
+
+
+<div th:fragment="menu_cli">
+	<nav>
+		<ul>
+			<li>
+				<a th:href="@{/MenuProximosConciertosCli}" class="enlace_menu">Próximos conciertos</a>
+			</li>
+			<li>
+				<div id="header_der" th:if="${cliente_login} != null">
+					<a th:href="@{/MenuAreaPersonalCli}" class="enlace_menu">Mis entradas</a>
+				</div>
+			</li>
+		</ul>
+	</nav>
+</div>
+
+<div th:fragment="pie">
+	<footer>
+		<p>Designed by: Ipartek S.C</p>
+	</footer>
+</div>

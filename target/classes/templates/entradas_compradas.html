@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/styles.css">
+	<script src="js/sha256login.js"></script>
+    <title>Concierticket</title>
+</head>
+
+<body>
+
+    <div th:include="plantillas.html::cabecera_cli"></div>
+
+	<div th:include="plantillas.html::menu_cli"></div>
+   
+
+    <main>
+        <section>
+				mostar mas adelante las entradas que ha comprado un cliente concreto
+<!--			<article th:each="elem : ${entradasImprimir}">-->
+<!--				<img th:src="@{'imagenes/'+${elem.concierto_id.foto}}" height="120px"></img>-->
+<!--				<h2 th:text="${elem.concierto_id.grupo}"></h2>-->
+<!--				<h3 th:text="${elem.concierto_id.precio} + ' Euros'"></h3>-->
+<!--				<h3 th:text="${elem.concierto_id.fecha}"></h3>-->
+<!--				<h3 th:text="${elem.concierto_id.ubicacion_id.nombre_sala}"></h3>-->
+<!--				<h4 th:text="${elem.concierto_id.ubicacion_id.direccion}"></h4>-->
+<!--				<h4 th:text="${elem.codigo}"></h4>-->
+<!--				<img th:src="@{'imagenes/qr/qr_'+${elem.id}+'.png'}" height="120px"></img>-->
+<!--			</article>-->
+        </section>
+    </main>
+
+	
+	<div th:include="plantillas.html::pie"></div>
+    
+
+
+
+</body>
+
+</html>

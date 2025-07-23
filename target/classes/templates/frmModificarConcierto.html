@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="styles/styles.css">
+	<title>Concierticket</title>
+</head>
+
+<body>
+
+	<div th:include="plantillas.html::cabecera"></div>
+
+	<div th:include="plantillas.html::menu"></div>
+
+	<main>
+
+		<div class="contenedor-flex">
+			
+			<section id="seccion-formularios">
+					
+			<h2>MODIFICAR CONCIERTO</h2>
+			
+			<form th:action="@{/ConciertoModificar}" method="post" enctype="multipart/form-data" th:object="${obj_concierto}">
+				
+				<input type="hidden" th:field="*{foto}"  required />
+				<input type="hidden" th:field="*{id}" readonly required />
+				
+
+				<label>Fecha</label>
+				<input type="date" th:field="*{fecha}" required />
+				<br />
+
+				<label>Grupo:</label>
+				<input type="text" th:field="*{grupo}" maxlength="45" required />
+				<br />
+
+				<label>Precio:</label>
+				<input type="number" step="0.01" th:field="*{precio}" min="0" required />
+				<br />
+
+				<label>Aforo:</label>
+				<input type="number" th:field="*{aforo}" min="1" max="5000" required />
+				<br />
+
+				<label>Ubicación:</label>
+				<select th:field="*{ubicacion_id}" requiered>
+					<option th:each="elem : ${listaUbicaciones}" th:value="${elem.id}" th:text="${elem.nombre_sala}">
+					</option>
+				</select>
+				<br />
+
+				<label>Foto:</label>
+				<input type="file" name="foto2" accept="image/*"  />
+				<br />
+				
+		
+				<input type="submit" value="Modificar" />
+				
+			</form>
+			
+		</section>
+		
+		</div>
+
+	</main>
+
+	<div th:include="plantillas.html::pie"></div>
+
+</body>
+
+</html>

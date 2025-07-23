@@ -1,0 +1,77 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-family: var(--fuenteSans);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+	border: none;
+}
+
+/* Estilos para la cabecera de la tabla */
+thead {
+    background-color: var(--colorPrincipal);
+    color: white;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+thead th {
+    padding: 15px;
+    text-align: left;
+    font-weight: bold;
+    border: none;
+}
+
+/* Estilos para las celdas del cuerpo */
+tbody td {
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--fondoOscuro);
+    vertical-align: middle;
+	border: none;
+}
+
+/* Estilos para las filas alternas */
+tbody tr:nth-child(even) {
+    background-color: var(--fondoClaro);
+}
+
+tbody tr:nth-child(odd) {
+    background-color: var(--fondoOscurofondoClaro);
+}
+
+tbody tr:hover {
+    background-color: var(--colorPrincipalClaro);
+    transition: background-color 0.3s ease;
+}
+
+/* Estilos para las imágenes */
+td img {
+    display: block;
+    margin: 0 auto;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+/* Estilos para los enlaces de opciones */
+td a {
+    color: var(--colorContrasteOscuro);
+    text-decoration: none;
+    font-size: 20px;
+    margin: 0 5px;
+    transition: color 0.2s ease;
+}
+
+td a:hover {
+    color: var(--colorPrincipalOscuro);
+}
+
+.caducado{
+	background-color: var(--fondoOscuro) !important;	
+}
+
+.caducado:hover{
+	background-color: var(--colorPrincipalOscuro) !important;	
+}

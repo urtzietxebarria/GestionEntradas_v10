@@ -1,0 +1,911 @@
+:root {
+    --alturaCabecera: 120px;
+    --alturaPie: 60px;
+    --alturaMenu: 50px;
+    --anchuraElemMenu: 200px;
+
+    --paddingGeneral: 10px;
+    --sizeFuenteMenu: 22px;
+
+    /* Colores principales */
+    --colorPrincipal: #003087;          /* Azul principal más oscuro */
+    --colorPrincipalClaro: #0040B0;     /* Azul claro más serio */
+    --colorPrincipalOscuro: #001F5B;    /* Azul oscuro profundo */
+
+    /* Colores de contraste */
+    --colorContraste: #0D0D0D;
+    --colorContrasteOscuro: #121212;
+    --colorContrasteClaro: #3A3A3A;
+
+    /* Fondos */
+    --fondoClaro: #FFFFFF;
+    --fondoOscuro: #F4F7FA;
+
+    /* Fuentes */
+    --fuenteSerif: "Merriweather", serif;
+    --fuenteSans: "Lora", serif;
+    --fuenteScript: "Merriweather";
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--fuenteSans);
+}
+
+/* CABECERA */
+header {
+    height: var(--alturaCabecera);
+    background-color: var(--colorPrincipal);
+    padding: var(--paddingGeneral);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+#header_izq {
+    width: 100%;
+}
+
+#header_der {
+    width: 200px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+#header_der img {
+    padding-left: var(--paddingGeneral);
+}
+
+h1 {
+    color: var(--fondoOscuro);
+    font-family: var(--fuenteSerif);
+    font-size: 48px;
+}
+
+/* MENÚ */
+nav {
+    background-color: var(--colorPrincipalClaro);
+}
+
+nav ul {
+    display: flex;
+}
+
+nav ul li {
+    list-style: none;
+}
+
+.enlace_menu {
+    width: var(--anchuraElemMenu);
+    height: var(--alturaMenu);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-weight: bolder;
+    font-size: var(--sizeFuenteMenu);
+    color: white;
+}
+
+.enlace_menu:visited {
+    color: white;
+}
+
+.enlace_menu:hover {
+    background-color: var(--colorContraste);
+    color: white;
+}
+
+.enlace_menu:active {
+    background-color: var(--colorContrasteOscuro);
+    color: var(--colorContrasteClaro);
+}
+
+/* MAIN */
+main {
+    background-color: var(--fondoOscuro);
+    padding: var(--paddingGeneral);
+    min-height: calc(100vh - (var(--alturaCabecera) + var(--alturaPie) + var(--alturaMenu) + 4 * var(--paddingGeneral)));
+}
+
+/* CONTENEDOR FORMULARIO*/
+.contenedor-flex {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+    align-items: stretch;
+    min-height: 400px;
+    margin-bottom: 2rem;
+}
+
+#seccion-formularios{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    background-color: var(--fondoClaro);
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(40, 36, 36, 0.3);
+}
+
+/* FORMULARIO */
+#seccion-formularios form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#seccion-formularios h2 {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    color: var(--colorPrincipal);
+    font-family: var(--fuenteScript);
+}
+
+#seccion-formularios label {
+    margin-top: 10px;
+    margin-bottom: 4px;
+    font-weight: bold;
+}
+
+#seccion-formularios input[type="text"],
+#seccion-formularios input[type="number"],
+#seccion-formularios input[type="file"],
+#seccion-formularios input[type="date"],
+#seccion-formularios select {
+    width: 50%;
+    padding: 6px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: #fff;
+}
+
+#seccion-formularios input[type="submit"] {
+    background-color: var(--colorPrincipal);
+	width: 50%;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#seccion-formularios input[type="submit"]:hover {
+    background-color: var(--colorPrincipalOscuro);
+}
+
+
+/* TABLA */
+#seccion-tablas h2 {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    color: var(--colorPrincipal);
+    font-family: var(--fuenteScript);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border: 1px solid var(--colorPrincipalClaro);
+}
+
+thead {
+    background-color: var(--colorPrincipalClaro);
+    color: white;
+}
+
+th, td {
+    padding: 8px;
+    border: 1px solid var(--colorPrincipalClaro);
+    text-align: center;
+    font-size: 14px;
+}
+
+tbody tr:nth-child(even) {
+    background-color: var(--fondoOscuro);
+}
+
+table img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 3px;
+}
+
+/* FICHAS DE CONCIERTOS */
+.card {
+    background-color: var(--fondoClaro);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 1rem;
+    margin: 1rem 0;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+}
+
+.card h2 {
+    color: var(--colorPrincipalClaro);
+    font-family: var(--fuenteScript);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.card h3 {
+    color: var(--colorPrincipalOscuro);
+    font-family: var(--fuenteScript);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.card p {
+    color: var(--colorContrasteOscuro);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.card p span {
+    font-weight: bold;
+    color: var(--colorPrincipal);
+}
+
+.card a {
+    display: inline-block;
+    text-decoration: none;
+    background-color: var(--colorPrincipalClaro);
+    color: white;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.card a:hover {
+    background-color: var(--colorPrincipalOscuro);
+}
+
+.contador {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    padding: 0.5rem;
+    background-color: var(--fondoOscuro);
+    border: 1px solid var(--colorPrincipalClaro);
+    border-radius: 8px;
+    width: 100%;
+}
+
+.contador button {
+    background-color: var(--colorPrincipalClaro);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.contador button:hover {
+    background-color: var(--colorPrincipalOscuro);
+}
+
+input[name="cantidad"] {
+    width: 60px;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: var(--fuenteSerif);
+    color: var(--colorPrincipalOscuro);
+    border: 2px solid var(--colorPrincipal);
+    border-radius: 6px;
+    padding: 6px 8px;
+    background-color: var(--fondoClaro);
+    user-select: none;
+}
+
+/* Elimina flechas en Firefox */
+input[name="cantidad"] {
+    -moz-appearance: textfield;
+}
+
+.boton-comprar {
+    margin-top: 1rem;
+    display: inline-block;
+    background-color: var(--colorPrincipalClaro);
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.boton-comprar:hover {
+    background-color: var(--colorPrincipalOscuro);
+}
+
+
+/* CONTENEDOR DE FICHAS PARA DISTRIBUIR EN GRID O FLEX */
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    padding: 1rem 0;
+    justify-items: center; /* centra cada card dentro de su celda */
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .cards-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 90%;
+        max-width: 350px;
+    }
+}
+
+
+/* ENLACES DE OPCIONES */
+td a {
+    margin: 0 5px;
+    text-decoration: none;
+    color: var(--colorContrasteOscuro);
+    font-size: 14px;
+}
+
+td a:hover {
+    text-decoration: underline;
+}
+
+/* PIE DE PÁGINA */
+footer {
+    background-color: var(--colorPrincipal);
+    height: var(--alturaPie);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+footer p {
+    margin-bottom: var(--paddingGeneral);
+    font-size: 22px;
+    color: white;
+    font-weight: bold;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .contenedor-flex {
+        flex-direction: column;
+    }
+
+    #seccion-formularios,
+    #seccion-alergenos {
+        width: 100%;
+    }
+	
+}
+
+#ticket {
+    background-color: var(--fondoClaro);
+    padding: 2rem;
+    border: 2px dashed var(--colorPrincipal);
+    width: 400px;
+    margin: 2rem auto;
+    font-size: 16px;
+    color: var(--colorPrincipalOscuro);
+    font-family: var(--fuenteSans);
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+.ticket-header h2,
+.ticket-header h3 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-family: var(--fuenteScript);
+    color: var(--colorPrincipalOscuro);
+}
+
+.ticket-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    border-bottom: 1px dotted var(--colorPrincipalClaro);
+}
+
+.ticket-item span {
+    margin: 0 4px;
+}
+
+.ticket-footer h3 {
+    text-align: right;
+    margin-top: 20px;
+    font-size: 18px;
+    color: var(--colorPrincipalOscuro);
+    font-weight: bold;
+}
+
+.ficha-concierto {
+    background-color: var(--fondoClaro);
+    border-radius: 10px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    padding: 2rem;
+    max-width: 600px;
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    color: var(--colorContrasteOscuro);
+}
+
+.ficha-concierto img {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.ficha-concierto h3 {
+    font-size: 2rem;
+    font-family: var(--fuenteScript);
+    color: var(--colorPrincipalClaro);
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.ficha-concierto p {
+    width: 100%;
+    font-size: 1.1rem;
+    margin: 0.4rem 0;
+    text-align: left;
+}
+
+.ficha-concierto p span {
+    font-weight: bold;
+    color: var(--colorPrincipal);
+}
+
+.ficha-concierto form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 1rem;
+}
+
+.ficha-concierto select[name="cantidad"] {
+    padding: 8px 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: 2px solid var(--colorPrincipalClaro);
+    border-radius: 6px;
+    background-color: #fff;
+    color: var(--colorPrincipalOscuro);
+    margin-bottom: 1rem;
+    width: 100px;
+}
+
+.ficha-concierto input[type="submit"] {
+    background-color: var(--colorPrincipalClaro);
+    color: white;
+    padding: 10px 24px;
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.ficha-concierto input[type="submit"]:hover {
+    background-color: var(--colorPrincipalOscuro);
+}
+
+article {
+  width: 700px;
+  height: 300px;
+  display: flex;
+  background: #fff;
+  border: 2px solid #ccc;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-family: 'Arial', sans-serif;
+  margin: 20px auto;
+  overflow: hidden;
+}
+
+.ticket-left {
+  width: 25%;
+  background: var(--colorPrincipal);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 10px;
+}
+
+.ticket-center {
+  width: 50%;
+  position: relative;
+  text-align: center;
+  background: #f4f4f4;
+  padding: 10px;
+}
+
+.ticket-center img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.ticket-center h2 {
+  font-size: 22px;
+  margin: 5px 0;
+}
+
+.ticket-center h3,
+.ticket-center h4 {
+  margin: 3px 0;
+  font-size: 16px;
+}
+
+.ticket-right {
+  width: 25%;
+  border-left: 2px dashed #aaa;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+  text-align: left;
+}
+
+.ticket-right h3,
+.ticket-right h4 {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+.ticket-right img {
+  width: 100px;
+  align-self: center;
+  margin-top: 10px;
+}
+
+.admit {
+  font-weight: bold;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  font-size: 16px;
+  text-align: center;
+  background: #000;
+  color: white;
+  padding: 5px;
+  margin-top: 10px;
+}
+
+.contenedor-login {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background-color: var(--fondoOscuro);
+}
+
+.form-login {
+    width: 100%;
+    max-width: 400px;
+    background-color: var(--fondoClaro);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+}
+
+.form-login h2 {
+    text-align: center;
+    color: var(--colorPrincipal);
+    font-family: var(--fuenteScript);
+    margin-bottom: 1.5rem;
+}
+
+.form-login label {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: var(--colorContrasteOscuro);
+}
+
+.form-login input[type="text"],
+.form-login input[type="password"] {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: #fff;
+}
+
+.form-login input[type="submit"] {
+    margin-top: 1.5rem;
+    background-color: var(--colorPrincipal);
+    color: white;
+    padding: 0.75rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-login input[type="submit"]:hover {
+    background-color: var(--colorPrincipalOscuro);
+}
+
+/* CABECERA CLIENTE PERSONALIZADA */
+header {
+    height: var(--alturaCabecera);
+    background-color: var(--colorPrincipal);
+    padding: 0 var(--paddingGeneral);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+/* Izquierda: logo */
+#header_izq {
+    display: flex;
+    align-items: center;
+}
+
+#header_izq img {
+    height: 100px;
+}
+
+/* Derecha: login */
+#header_der {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 0.5rem;
+    min-width: 200px;
+}
+
+/* Formulario de login */
+#header_der form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+#header_der input[type="text"],
+#header_der input[type="password"],
+#header_der input[type="submit"],
+#header_der input[type="hidden"] {
+    font-size: 0.9rem;
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-top: 0.4rem;
+    width: 160px;
+}
+
+#header_der input[type="submit"] {
+    background-color: var(--colorPrincipalClaro);
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#header_der input[type="submit"]:hover {
+    background-color: var(--colorPrincipalOscuro);
+}
+
+/* Saludo del usuario */
+#header_der p {
+    font-size: 1rem;
+    color: white;
+    font-weight: bold;
+}
+
+#header_der a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+#header_der a:hover {
+    text-decoration: underline;
+}
+
+/* RESPONSIVE PARA HEADER */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    #header_der {
+        align-items: center;
+    }
+
+    #header_der form {
+        align-items: center;
+    }
+
+    #header_der input {
+        width: 100%;
+    }
+}
+
+/* Agrupación de cada campo */
+.campo-login {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    gap: 0.5rem;
+    color: white;
+}
+
+/* Etiquetas del formulario */
+.campo-login label {
+    min-width: 90px;
+    font-weight: bold;
+    color: white;
+}
+
+/* Inputs del formulario */
+.campo-login input[type="text"] {
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 150px;
+    font-size: 0.9rem;
+}
+
+/* Botón de envío */
+.boton-login input[type="submit"] {
+    background-color: var(--colorPrincipalClaro);
+    color: white;
+    padding: 8px 16px;
+    border: 2px solid white;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    
+    
+    /* Opcional: borde doble simulado */
+    outline: 2px solid white;
+    outline-offset: -4px;
+}
+
+.boton-login input[type="submit"]:hover {
+    background-color: var(--colorPrincipalOscuro);
+    transform: scale(1.05); /* efecto de crecimiento al pasar el mouse */
+}
+
+.print-button {
+  background-color: #5c6bc0;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+  transition: background-color 0.3s ease;
+}
+
+.print-button:hover {
+  background-color: #3f51b5;
+}
+
+@media print {
+  .ocultar-en-impresion {
+    display: none !important;
+  }
+}
+
+
+@media print {
+  /* Ocultar elementos que no deben aparecer en la impresión */
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  /*header,
+  nav,
+  footer,
+  .cabecera,
+  .menu,
+  [th\\:include="plantillas.html::cabecera_cli"],
+  [th\\:include="plantillas.html::menu_cli"],
+  [th\\:include="plantillas.html::pie"] {
+    display: none !important;
+  }*/
+
+  /* Eliminar sombras, bordes, colores de fondo */
+  * {
+    box-shadow: none !important;
+    background: none !important;
+    color: black !important;
+  }
+
+  /* Ajustar tamaño de impresión */
+  main, section, article {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  /* Opcional: ajustar tamaño de imagenes si se desbordan */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Opcional: quitar enlaces */
+  a::after {
+    content: "";
+  }
+  
+  @media print {
+    button {
+      display: none;
+    }
+  }
+  
+}

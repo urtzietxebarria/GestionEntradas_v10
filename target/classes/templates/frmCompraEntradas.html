@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="styles/styles.css">
+	<script src="js/sha256login.js"></script>
+	<title>Concierticket</title>
+</head>
+
+<body>
+
+	<div th:include="plantillas.html::cabecera_cli"></div>
+
+	<div th:include="plantillas.html::menu_cli"></div>
+	
+
+	<main>
+		
+		<div class="ficha-concierto">
+			
+			<section>
+				
+					<h3 th:text="${concierto.grupo}">grupo</h3>
+					<img th:src="@{'imagenes/'+${concierto.foto}}" width="120px">
+					<p>Precio: <span th:text="${concierto.precio}"></span>€</p>
+				    <p>Sala: <span th:text="${concierto.ubicacion_id.nombre_sala}"></span></p>
+				    <p>Entradas restantes: <span th:text="${concierto.aforo - concierto.entradas_vendidas}"></span></p>
+					
+					<form method="post" th:action="@{/ComprarEntrada}">
+						<select name="cantidad">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>	
+							<option value="6">6</option>			
+						</select>
+						
+						<input type="hidden" name="id" th:value="${concierto.id}">
+					
+						<input type="submit" value="Comprar">
+					</form>
+		
+			</section>
+		
+		</div>
+
+	</main>
+
+	<div th:include="plantillas.html::pie"></div>
+
+</body>
+
+</html>

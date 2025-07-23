@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="styles/styles.css">
+	<script src="js/sha256login.js"></script>
+	<title>Concierticket</title>
+</head>
+
+<body>
+
+	<div th:include="plantillas.html::cabecera_cli"></div>
+
+
+	<div th:include="plantillas.html::menu_cli"></div>
+
+	<main>
+
+		<div class="cards-container">
+
+			<div class="card" th:each="elem : ${listaConciertos}">
+				<h2 th:text="${elem.grupo}">grupo</h2>
+				<img th:src="@{'imagenes/'+${elem.foto}}" width="120px">
+				<p> Sala: <span th:text="${elem.ubicacion_id.nombre_sala}"></span></p>
+				<p> Precio: <span th:text="${elem.precio}"></span></p>
+				<p> Entradas restantes: <span th:text="${elem.aforo - elem.entradas_vendidas}"></span></p>
+				<!-- Mostrar mensaje de error si existe -->
+		        <div th:if="${mensaje_error}" style="color: red; font-weight: bold; margin-bottom: 10px;">
+		            <p th:text="${mensaje_error}"></p>
+		        </div>
+		        <!-- Mostrar botón solo si NO hay mensaje de error -->
+		        <a th:if="${mensaje_error == null}" th:href="@{/FrmComprarEntrada(id=${elem.id})}">Comprar entradas</a>
+			</div>
+
+		</div>
+	
+	</main>
+
+	<div th:include="plantillas.html::pie"></div>
+
+</body>
+
+</html>
