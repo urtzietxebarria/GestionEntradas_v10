@@ -109,17 +109,17 @@ public class FrontendControlador {
 			}
 			
 			if (ids.length() > 0) {
-				ids.deleteCharAt(ids.length() - 1); // eliminar la última coma
+				ids.deleteCharAt(ids.length() - 1); //Eliminar la última coma
 			}
 
-			// ir a otra pagina y mostrar las entradas al usuario
+			//Ir a otra pagina y mostrar las entradas al usuario
 			redirectAttributes.addFlashAttribute("entradasImprimir", listaEntradas);
 			return "redirect:/ImprimirEntradas?ids=" + ids.toString();
 
 		} else {
-			// ir otra vea a la pagina de la entrada, para comprar otra cantidad
+			//Ir otra vea a la pagina de la entrada, para comprar otra cantidad
 			model.addAttribute("concierto", conci);
-			model.addAttribute("obj_cliente", new Cliente()); // alain
+			model.addAttribute("obj_cliente", new Cliente()); //alain
 			return "frmCompraEntradas";
 
 		}
@@ -132,7 +132,7 @@ public class FrontendControlador {
 			HttpSession session) {
 		
 		model.addAttribute("concierto", conciertoServ.obtenerConciertoPorId(id));
-		model.addAttribute("obj_cliente", new Cliente()); // alain
+		model.addAttribute("obj_cliente", new Cliente()); //alain
 		
 		Cliente cliente_sesion=new Cliente();
 		if (session.getAttribute("s_cliente_login")!=null) {
@@ -148,8 +148,8 @@ public class FrontendControlador {
 			
 			model.addAttribute("cliente_login", cliente_sesion);
 			model.addAttribute("mensaje_error", "Debe registrarse para poder comprar entradas.");
-			model.addAttribute("obj_cliente", new Cliente());//es temporal, se va a quitar
-			model.addAttribute("listaConciertos", conciertoServ.obtenerProximosConciertos());//es temporal, se va a quitar
+			model.addAttribute("obj_cliente", new Cliente());//Es temporal, se va a quitar
+			model.addAttribute("listaConciertos", conciertoServ.obtenerProximosConciertos());//Es temporal, se va a quitar
 			
 			return "entradas";
 		}
@@ -210,7 +210,7 @@ public class FrontendControlador {
 		Cliente clienteSesion = (Cliente) session.getAttribute("s_cliente_login");
 
 	    if (clienteSesion == null || clienteSesion.getId() <= 0) {
-	        return "redirect:/"; // o a login
+	        return "redirect:/"; 
 	    }
 
 	    List<Entrada> entradasCliente = entradaServ.obtenerEntradasPorClienteId(clienteSesion.getId());
@@ -218,10 +218,10 @@ public class FrontendControlador {
 	    model.addAttribute("cliente_login", clienteSesion);
 	    model.addAttribute("obj_cliente", new Cliente());
 
-	    model.addAttribute("entradasCliente", entradasCliente); // <-- NUEVO
+	    model.addAttribute("entradasCliente", entradasCliente);
 
 	    return "conciertos_confirmados";
 			
 	}
-
+	
 }
