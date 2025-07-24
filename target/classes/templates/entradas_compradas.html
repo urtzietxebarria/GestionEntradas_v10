@@ -2,41 +2,57 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/styles.css">
-	<script src="js/sha256login.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="styles/styles.css" />
+    <script src="js/sha256login.js"></script>
     <title>Concierticket</title>
 </head>
 
 <body>
 
-    <div th:include="plantillas.html::cabecera_cli"></div>
-
-	<div th:include="plantillas.html::menu_cli"></div>
-   
+    <!-- Añadida clase ocultar-en-impresion -->
+    <div class="ocultar-en-impresion" th:include="plantillas.html::cabecera_cli"></div>
+    <div class="ocultar-en-impresion" th:include="plantillas.html::menu_cli"></div>
 
     <main>
-        <section>
-				mostar mas adelante las entradas que ha comprado un cliente concreto
-<!--			<article th:each="elem : ${entradasImprimir}">-->
-<!--				<img th:src="@{'imagenes/'+${elem.concierto_id.foto}}" height="120px"></img>-->
-<!--				<h2 th:text="${elem.concierto_id.grupo}"></h2>-->
-<!--				<h3 th:text="${elem.concierto_id.precio} + ' Euros'"></h3>-->
-<!--				<h3 th:text="${elem.concierto_id.fecha}"></h3>-->
-<!--				<h3 th:text="${elem.concierto_id.ubicacion_id.nombre_sala}"></h3>-->
-<!--				<h4 th:text="${elem.concierto_id.ubicacion_id.direccion}"></h4>-->
-<!--				<h4 th:text="${elem.codigo}"></h4>-->
-<!--				<img th:src="@{'imagenes/qr/qr_'+${elem.id}+'.png'}" height="120px"></img>-->
-<!--			</article>-->
+		
+        <section class="entradas-compradas">
+
+            <!-- Quitar texto suelto fuera de etiquetas -->
+            <h2 class="ocultar-en-impresion" th:text="'Estas son todas tus entradas ' + ${cliente_login.user}"> </h2>
+
+            <article class="entrada-ticket" th:each="elem : ${entradasCliente}">
+
+                <div class="ticket-left">
+                    <img src="iconos/concierticket.png" alt="Logo" style="height: 110px; margin-right: 15px;" />
+                </div>
+
+                <div class="ticket-center">
+                    <h2 th:text="${elem.concierto_id.grupo}">Nombre Artista</h2>
+                    <img th:src="@{'imagenes/' + ${elem.concierto_id.foto}}" alt="Imagen concierto" />
+                    <h3 th:text="${elem.concierto_id.ubicacion_id.nombre_sala}">Sala</h3>
+                    <h4 th:text="${elem.concierto_id.ubicacion_id.direccion}">Dirección</h4>
+                </div>
+
+                <div class="ticket-right">
+
+                    <h3>PRECIO:<span th:text="${elem.concierto_id.precio} + '€'"></span></h3>
+                    <h3>FECHA:<span th:text="${elem.concierto_id.fecha}"></span></h3>
+                    <h4>PUERTAS: 21:00</h4>
+                    <img th:src="@{'imagenes/qr/qr_' + ${elem.id} + '.png'}" />
+                    <!--<h4>COD: <span th:text="${entrada.codigo}">123456</span></h4>-->
+                </div>
+
+            </article>
+
+            <button class="print-button ocultar-en-impresion" onclick="window.print()">Imprimir</button>
+
         </section>
+		
     </main>
 
-	
-	<div th:include="plantillas.html::pie"></div>
-    
-
-
+    <div class="ocultar-en-impresion" th:include="plantillas.html::pie"></div>
 
 </body>
 

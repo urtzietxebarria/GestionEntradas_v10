@@ -63,4 +63,21 @@ public class EntradaServicioImp implements EntradaServicio {
 
 	}
 
+	@Override
+	public List<Entrada> obtenerEntradasClienteConcierto(Integer idCliente, Integer idConcierto) {
+		
+		int idClienteTemp=0;
+		if (idCliente!=null) {
+			idClienteTemp= idCliente;
+		}
+		
+		int idConciertoTemp=0;
+		if (idConcierto!=null) {
+			idConciertoTemp= idConcierto;
+		}
+		
+		return entradaRepo.obtenerEntradasPorConciertoYClienteRepo(idClienteTemp, idConciertoTemp);
+		
+	}
+
 }

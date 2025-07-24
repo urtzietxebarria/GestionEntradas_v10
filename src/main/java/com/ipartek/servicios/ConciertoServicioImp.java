@@ -1,5 +1,6 @@
 package com.ipartek.servicios;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,36 +20,54 @@ public class ConciertoServicioImp implements ConciertoServicio {
 	
 	@Override
 	public void insertarConcierto(Concierto conci) {
+		
 		if (conci.getId()==0) {
+			
 			conciertoRepo.save(conci);
+			
 		}	
+		
 	}
 
 	@Override
 	public void borrarConcierto(Integer id) {
+		
 		conciertoRepo.deleteById(id);	
+		
 	}
 
 	@Override
 	public void modificarConcierto(Concierto conci) {
+		
 		if(conci.getId()>0) {
+			
 			conciertoRepo.save(conci);
+			
 		}
+		
 	}
 
 	@Override
 	public Concierto obtenerConciertoPorId(Integer id) {
+		
 		int idTemp=0;
+		
 		if (id!=null) {
+			
 			idTemp= id;
+			
 		}
 		
-		Optional<Concierto> conci= conciertoRepo.findById(idTemp);
+		Optional<Concierto> conci = conciertoRepo.findById(idTemp);
 		
 		if (conci.isPresent()) {
+			
 			return conci.orElse(new Concierto());
+			
 		}else {
+			
 			return new Concierto();
+			
 		}		
 	}
 
@@ -60,7 +79,29 @@ public class ConciertoServicioImp implements ConciertoServicio {
 
 	@Override
 	public List<Concierto> obtenerProximosConciertos() {
+		
 		return conciertoRepo.obtenerProximosConciertosRepo();
+		
+	}
+
+	@Override
+	public List<Concierto> obtenerTodosConciertosAsistenciaPorUsuario(Integer id) {
+		
+		int idTemp=0;
+		if (id != null) {
+			idTemp = id;
+		}
+		
+		List<Integer> listaIdConciertos = conciertoRepo.obtenerConciertosUsuarioRepo(idTemp);
+		List<Concierto> listaConciertos = new ArrayList<>();
+		
+		for(Integer elem : listaIdConciertos) {
+			
+			listaConciertos.add(conciertoRepo.findById(elem).orElse(new Concierto()));
+			
+		}
+		
+		return listaConciertos;
 	}
 
 }

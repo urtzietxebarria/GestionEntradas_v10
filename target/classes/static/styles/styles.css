@@ -852,43 +852,30 @@ header {
   background-color: #3f51b5;
 }
 
-@media print {
+@media print {	
   .ocultar-en-impresion {
     display: none !important;
   }
-}
-
-
-@media print {
+  
   /* Ocultar elementos que no deben aparecer en la impresión */
   body {
     background: white !important;
     color: black !important;
   }
-
-  /*header,
-  nav,
-  footer,
-  .cabecera,
-  .menu,
-  [th\\:include="plantillas.html::cabecera_cli"],
-  [th\\:include="plantillas.html::menu_cli"],
-  [th\\:include="plantillas.html::pie"] {
-    display: none !important;
-  }*/
+  
+  article{
+	min-height: 10cm;
+	border: 1mm solid black;
+	margin-bottom: 1mm;
+	padding: 0;
+	width: 100%;
+  }
 
   /* Eliminar sombras, bordes, colores de fondo */
   * {
     box-shadow: none !important;
     background: none !important;
     color: black !important;
-  }
-
-  /* Ajustar tamaño de impresión */
-  main, section, article {
-    margin: 0;
-    padding: 0;
-    width: 100%;
   }
 
   /* Opcional: ajustar tamaño de imagenes si se desbordan */
@@ -902,10 +889,74 @@ header {
     content: "";
   }
   
-  @media print {
-    button {
-      display: none;
-    }
+  button {
+  	display: none;
   }
-  
+ 
 }
+
+.conciertos-cliente {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  background: #f9f9f9;
+}
+
+.conciertos-cliente article {
+  background: #fff;
+  border: 2px solid var(--colorPrincipal, #0d6efd);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  width: 300px;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.conciertos-cliente article:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+.conciertos-cliente article img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+
+.conciertos-cliente article h2 {
+  font-size: 1.5rem;
+  color: var(--colorPrincipal, #0d6efd);
+  margin: 8px 0 6px;
+}
+
+.conciertos-cliente article h3 {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+.conciertos-cliente article a {
+  text-decoration: none;
+  background-color: var(--colorPrincipal, #0d6efd);
+  color: white;
+  padding: 10px 18px;
+  border-radius: 20px;
+  font-weight: 600;
+  box-shadow: 0 3px 8px rgba(13,110,253,0.5);
+  transition: background-color 0.3s ease;
+}
+
+.conciertos-cliente article a:hover {
+  background-color: #0b5ed7;
+}
+

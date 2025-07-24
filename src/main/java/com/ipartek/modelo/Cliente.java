@@ -101,12 +101,12 @@ public class Cliente {
 	public void setEntrada_cli(List<Entrada> entrada_cli) {
 		this.entrada_cli = entrada_cli;
 	}
-
-	@Override
-	public String toString() {
-		return "Cliente [id=" + id + ", user=" + user + ", pass=" + pass + ", salt=" + salt + ", pepper=" + pepper
-				+ ", entrada_cli=" + entrada_cli + "]";
-	}
+//
+//	@Override
+//	public String toString() {
+//		return "Cliente [id=" + id + ", user=" + user + ", pass=" + pass + ", salt=" + salt + ", pepper=" + pepper
+//				+ ", entrada_cli=" + entrada_cli + "]";
+//	}
 	
 	
 

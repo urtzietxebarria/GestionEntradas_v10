@@ -41,6 +41,7 @@ public class FrontendControlador {
 	@Autowired // Inyecta automáticamente el servicio de gestión de conciertos
 	private ConciertoServicio conciertoServ;
 
+
 	/**
 	 * Método POST para procesar la compra de entradas
 	 */
@@ -215,28 +216,51 @@ public class FrontendControlador {
 	}
 
 	/**
-	 * Muestra el área personal del cliente, con sus entradas compradas
+	 * Muestra el área personal del cliente, con los conciertos para los que tiene entradas
 	 */
 	@GetMapping("/MenuAreaPersonalCli")
 	public String menuAreaPersonalCli(Model model,
 			HttpSession session) {
 
-		// Recuperar cliente logueado
-		Cliente clienteSesion = (Cliente) session.getAttribute("s_cliente_login");
-
-		// Si no está logueado, redirige al inicio
-		if (clienteSesion == null || clienteSesion.getId() <= 0) {
-			return "redirect:/";
+		Cliente clienteSesion = new Cliente();
+		if (session.getAttribute("s_cliente_login") != null) {
+			clienteSesion = (Cliente) session.getAttribute("s_cliente_login");
 		}
 
 		// Obtener todas las entradas del cliente
 		List<Entrada> entradasCliente = entradaServ.obtenerEntradasPorClienteId(clienteSesion.getId());
+		List<Concierto> conciertosCliente = conciertoServ.obtenerTodosConciertosAsistenciaPorUsuario(clienteSesion.getId());
 
 		model.addAttribute("cliente_login", clienteSesion);
 		model.addAttribute("obj_cliente", new Cliente());
 		model.addAttribute("entradasCliente", entradasCliente);
+		model.addAttribute("conciertosCliente", conciertosCliente);
 
 		return "conciertos_confirmados"; // Vista del historial del cliente
+		
+	}
+	
+	@GetMapping("/MenuEntradasUsuConci")
+	public String mostrarEntradasUsuarioConcierto(Model model, 
+			HttpSession session,
+			@RequestParam Integer id) {
+
+		Cliente clienteSesion = new Cliente();
+		if (session.getAttribute("s_cliente_login") != null) {
+			clienteSesion = (Cliente) session.getAttribute("s_cliente_login");
+		}
+		
+		int id_cli = clienteSesion.getId();
+		int id_conci = id;
+		
+		List<Entrada> entradasCliente = entradaServ.obtenerEntradasClienteConcierto(id_cli, id_conci);
+		
+		model.addAttribute("cliente_login", clienteSesion);
+		model.addAttribute("obj_cliente", new Cliente());
+		model.addAttribute("entradasCliente", entradasCliente);
+		
+		return "entradas_compradas";
+		
 	}
 }
 
