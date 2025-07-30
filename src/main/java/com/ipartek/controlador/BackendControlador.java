@@ -1,5 +1,7 @@
 package com.ipartek.controlador;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -12,7 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ipartek.auxiliar.Auxiliar;
 import com.ipartek.modelo.Cliente;
 import com.ipartek.modelo.Concierto;
+import com.ipartek.modelo.Entrada;
 import com.ipartek.servicios.ConciertoServicio;
+import com.ipartek.servicios.EntradaServicio;
 import com.ipartek.servicios.UbicacionServicio;
 import jakarta.servlet.http.HttpSession;
 
@@ -24,6 +28,9 @@ public class BackendControlador {
 
 	@Autowired // Inyecta el servicio de gestión de ubicaciones
 	private UbicacionServicio ubicacionServ;
+	
+	@Autowired // Inyecta el servicio de gestión de entradas
+	private EntradaServicio entradaServ;
 
 	@Value("${ruta.imagenes}") // Inyecta la ruta de imágenes desde application.properties
 	String rutaFotos;
@@ -144,6 +151,22 @@ public class BackendControlador {
 
 		return "redirect:/MenuGestionConciertos"; // Vuelve al menú
 		
+	}
+	
+	@GetMapping("/ConciertoMostrarTodos")
+	public String conciertoMostrarTodos(Model model) {
+	    model.addAttribute("listaConciertos", conciertoServ.obtenerTodosConciertos());
+	    return "conciertos_todos";  // vista que muestra los conciertos
+	}
+
+	@GetMapping("/MostrarEntradasVendidas")
+	public String entradasVendidas(Model model,
+	        @RequestParam("id_conci") Integer idConcierto) {
+	    
+	    List<Entrada> entradas = entradaServ.obtenerTodasEntradasPorIdConcierto(idConcierto);
+	    model.addAttribute("listaEntradas", entradas);  // aquí las entradas del concierto
+	    
+	    return "entradas_detalle";  // vista para mostrar las entradas del concierto
 	}
 	
 }

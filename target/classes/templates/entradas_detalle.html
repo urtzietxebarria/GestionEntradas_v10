@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="styles/styles.css">
+	<link rel="stylesheet" href="styles/tabla.css">
+	<title>Concierticket</title>
+</head>
+
+<body>
+
+	<div th:include="plantillas.html::cabecera"></div>
+
+	<div th:include="plantillas.html::menu"></div>
+
+	<main>
+
+		<section id="seccion-tablas">
+			
+			<table border="1">
+				
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>CÓDIGO</th>
+						<th>CONCIERTO</th>
+						<th>CLIENTE</th>
+						<th>ENTRADAS VENDIDAS</th>
+						<th>OPCIONES</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr th:each="entrada : ${listaEntradas}">
+						<td th:text="${entrada.id}"></td>
+						<td th:text="${entrada.codigo}"></td>
+						<td th:text="${entrada.concierto_id.grupo}"></td>
+						<td th:text="${entrada.cliente.user}"></td>
+						<td th:text="${entrada.concierto_id.entradas_vendidas}"></td>
+						<td>
+							<a th:href="@{/ConciertoBorrar(id=${entrada.id})}">🗑️</a>
+						</td>
+					</tr>							
+				</tbody>
+				
+			</table>
+			
+			
+
+		</section>
+
+	</main>
+
+	<div th:include="plantillas.html::pie"></div>
+
+</body>
+
+<style>
+	#seccion-tablas th {
+		text-align: center;
+	}
+</style>
+
+</html>

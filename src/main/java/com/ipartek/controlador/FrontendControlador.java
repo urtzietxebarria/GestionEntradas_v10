@@ -61,7 +61,10 @@ public class FrontendControlador {
 
 		// Calcular cuántas entradas quedan disponibles
 		int disponibles = conci.getAforo() - conci.getEntradas_vendidas();
-
+		
+		//int cunatasPuedeComprar = 6 - contar cuantas entradas tiene de ese concierto
+		
+		//en este if añadir && cuantasPuedeComprar <  cantidad
 		// Verifica si hay suficientes entradas disponibles
 		if (disponibles > cantidad) {
 			List<Entrada> listaEntradas = new ArrayList<>();

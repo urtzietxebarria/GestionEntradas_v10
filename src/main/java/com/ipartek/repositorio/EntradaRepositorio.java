@@ -17,5 +17,9 @@ public interface EntradaRepositorio extends JpaRepository<Entrada, Integer> {
 	String SQL = "SELECT * FROM entradas WHERE cliente_id = :cli AND concierto_id_id = :conci;";
 	@Query(value = SQL, nativeQuery = true)
 	List<Entrada> obtenerEntradasPorConciertoYClienteRepo(@Param("cli") int cli, @Param("conci") int conci);
+	
+	String SQL2 = "SELECT e.* FROM entradas e WHERE e.concierto_id_id = :conci_id;";
+	@Query(value = SQL2, nativeQuery = true)
+	List<Entrada> obtenerEntradasPorConciertoId(@Param("conci_id") int conci_id);
 
 }

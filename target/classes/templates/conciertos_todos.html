@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="styles/styles.css">
+	<script src="js/sha256login.js"></script>
+	<title>Concierticket</title>
+</head>
+
+<body>
+
+	<div th:include="plantillas.html::cabecera"></div>
+
+
+	<div th:include="plantillas.html::menu"></div>
+
+	<main>
+
+		<div class="cards-container">
+
+			<div class="card" th:each="concierto : ${listaConciertos}">
+				
+				<h2 th:text="${concierto.grupo}">grupo</h2>
+				<img th:src="@{'imagenes/'+${concierto.foto}}" width="120px">
+				<p> Sala: <span th:text="${concierto.ubicacion_id.nombre_sala}"></span></p>
+				<p> Precio: <span th:text="${concierto.precio}"></span></p>
+				<p> Entradas restantes: <span th:text="${concierto.aforo - concierto.entradas_vendidas}"></span></p>
+				<a th:href="@{/MostrarEntradasVendidas(id_conci=${concierto.id})}">Ver entradas</a>
+				
+			</div>
+
+		</div>
+	
+	</main>
+
+	<div th:include="plantillas.html::pie"></div>
+
+</body>
+
+</html>

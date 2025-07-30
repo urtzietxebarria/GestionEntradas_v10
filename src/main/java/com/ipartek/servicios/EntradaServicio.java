@@ -20,4 +20,6 @@ public interface EntradaServicio {
 	
 	List<Entrada> obtenerEntradasClienteConcierto(Integer idCliente, Integer idConcierto);
 	
+	List<Entrada> obtenerTodasEntradasPorIdConcierto(Integer idConci);
+	
 }

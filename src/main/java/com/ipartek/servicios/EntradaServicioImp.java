@@ -80,4 +80,16 @@ public class EntradaServicioImp implements EntradaServicio {
 		
 	}
 
+	@Override
+	public List<Entrada> obtenerTodasEntradasPorIdConcierto(Integer idConci) {
+		
+		int idConciTemp=0;
+		if (idConci!=null) {
+			idConciTemp= idConci;
+		}
+		
+		return entradaRepo.obtenerEntradasPorConciertoId(idConciTemp);
+		
+	}
+
 }
